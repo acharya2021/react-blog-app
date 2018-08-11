@@ -31,7 +31,10 @@ class PostsNew extends Component {
 
     onSubmit(values) {
         // the object values contains the post title, category, and content
-        this.props.createPost(values);
+        this.props.createPost(values, () => {
+            // navigate back to the index page
+            this.props.history.push('/');
+        });
     }
 
     render() {
@@ -55,12 +58,8 @@ class PostsNew extends Component {
                     name="content"
                     component={this.renderField}
                 />
-                <button type="submit" className="btn btn-primary">
-                    Submit
-                </button>
-                <Link to="/" className="btn btn-danger">
-                    Cancel
-                </Link>
+                <button type="submit" className="btn btn-primary">Submit</button>
+                <Link to="/" className="btn btn-danger">Cancel</Link>
             </form>
         )
     }

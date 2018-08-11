@@ -20,10 +20,11 @@ export function fetchPosts() {
 }
 
 // make a new Action Creator called createPost
-export function createPost(values) {
+export function createPost(values, callback) {
     // make a post request to our backend API
     // the second argument is the object/data that we want to send to the API
-    const request = axios.post(`${ROOT_URL}/posts${API_KEY}`, values);
+    const request = axios.post(`${ROOT_URL}/posts${API_KEY}`, values)
+        .then(() => callback());
 
     return {
         type: CREATE_POST,
