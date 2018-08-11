@@ -7,11 +7,12 @@ import {createStore, applyMiddleware} from 'redux';
 // the Route object provides configuration to react-router
 // in order to show a component based on the url
 import {BrowserRouter, Route} from 'react-router-dom';
+import promise from 'redux-promise';
 
 import reducers from './reducers';
 import PostsIndex from './components/posts_index';
 
-const createStoreWithMiddleware = applyMiddleware()(createStore);
+const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
 ReactDOM.render(
     <Provider store={createStoreWithMiddleware(reducers)}>
