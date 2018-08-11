@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import {Field, reduxForm} from 'redux-form';
+import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {createPost} from "../actions";
 
 class PostsNew extends Component {
-
 
     renderField(field) {
 
@@ -28,7 +30,8 @@ class PostsNew extends Component {
     }
 
     onSubmit(values) {
-        console.log(values);
+        // the object values contains the post title, category, and content
+        this.props.createPost(values);
     }
 
     render() {
@@ -55,6 +58,9 @@ class PostsNew extends Component {
                 <button type="submit" className="btn btn-primary">
                     Submit
                 </button>
+                <Link to="/" className="btn btn-danger">
+                    Cancel
+                </Link>
             </form>
         )
     }
@@ -79,11 +85,12 @@ function validate(values) {
     return errors;
 }
 
-
 // reduxForm is very similar to the connect helper
 // we use it to wrap the PostsNew component
 // thereby allowing reduxForm to communicate directly from this component to the form reducer
 export default reduxForm({
     validate,
     form: "PostsNewForm"
-})(PostsNew);
+})(
+    connect(null, {createPost})(PostsNew)
+);

@@ -2,6 +2,7 @@
 import axios from 'axios';
 
 export const FETCH_POSTS = 'fetch_posts';
+export const CREATE_POST = 'create_post';
 
 const ROOT_URL = "http://reduxblog.herokuapp.com/api";
 // create an arbitrary api key
@@ -13,6 +14,19 @@ export function fetchPosts() {
 
     return {
         type: FETCH_POSTS,
+        payload: request
+    };
+
+}
+
+// make a new Action Creator called createPost
+export function createPost(values) {
+    // make a post request to our backend API
+    // the second argument is the object/data that we want to send to the API
+    const request = axios.post(`${ROOT_URL}/posts${API_KEY}`, values);
+
+    return {
+        type: CREATE_POST,
         payload: request
     };
 
