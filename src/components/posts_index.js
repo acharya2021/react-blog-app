@@ -8,8 +8,7 @@ import {fetchPosts} from "../actions";
 
 class PostsIndex extends Component {
     // a react life cycle method
-    // automatically called by react immediately after this component
-    // has shown up inside the dom
+    // automatically called by react immediately after this component has shown up inside the dom
     componentDidMount() {
         this.props.fetchPosts();
     }
