@@ -15,13 +15,20 @@ class PostsNew extends Component {
                     type="text"
                     {...field.input}
                 />
+                {field.meta.touched ? field.meta.error : ""}
             </div>
-        )
+        );
+    }
+
+    onSubmit(values) {
+        console.log(values);
     }
 
     render() {
+        const {handleSubmit} = this.props;
+
         return (
-            <form>
+            <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                 {/*used to represent a distinct input on the screen*/}
                 <Field
                     label="Title"
@@ -29,8 +36,8 @@ class PostsNew extends Component {
                     component={this.renderField}
                 />
                 <Field
-                    label="Tags"
-                    name="tags"
+                    label="Categories"
+                    name="categories"
                     component={this.renderField}
                 />
                 <Field
@@ -38,14 +45,38 @@ class PostsNew extends Component {
                     name="content"
                     component={this.renderField}
                 />
+                <button type="submit" className="btn btn-primary">
+                    Submit
+                </button>
             </form>
         )
     }
 }
 
+function validate(values) {
+    // values contains the contents of the form
+    const errors = {};
+
+    // validate the inputs from values
+    if (!values.title || values.title.length < 3) {
+        errors.title = "Enter a title that is at least 3 characters!";
+    }
+    if (!values.categories) {
+        errors.categories = "Enter some categories";
+    }
+    if (!values.content) {
+        errors.content = "Enter some content";
+    }
+
+    // if errors is empty, the form is fine to submit
+    return errors;
+}
+
+
 // reduxForm is very similar to the connect helper
 // we use it to wrap the PostsNew component
-// thereby giving reduxForm to communicate directly from this component to the form reducer
+// thereby allowing reduxForm to communicate directly from this component to the form reducer
 export default reduxForm({
+    validate,
     form: "PostsNewForm"
 })(PostsNew);
