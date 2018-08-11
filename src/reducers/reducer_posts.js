@@ -1,8 +1,14 @@
 import _ from 'lodash';
-import {FETCH_POSTS, FETCH_POST} from "../actions";
+import {FETCH_POSTS, FETCH_POST, DELETE_POST} from "../actions";
 
 export default function (state = {}, action) {
     switch (action.type) {
+
+        case DELETE_POST:
+            // if the state object has a key of the post id, omit it from that object
+            // return a new state object with that id not present
+            return _.omit(state, action.payload);
+
         case FETCH_POST:
             // ES5 way
             // // the post that we fetch is available as action.payload.data as we're using axios
